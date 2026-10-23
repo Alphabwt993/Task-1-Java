@@ -2,6 +2,7 @@ package task.service;
 
 
 import task.model.User;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class UserService {
         System.out.println("\n--- Результат обработки Stream API ---");
         users.stream()
                 .filter(user -> user.getName().length() > 3)
-                .map(user -> new User(user.getId(), user.getName(), user.getEmail().toUpperCase()))
+                .map(user -> new User(user.getId(), user.getName().toUpperCase(), user.getEmail()))
                 .sorted(Comparator.comparingInt(User::getId))
                 .forEach(System.out::println);
         System.out.println("------------------------------------");
@@ -68,7 +69,7 @@ public class UserService {
         try {
             int id = Integer.parseInt(idStr);
             if (id <= 0) {
-                throw new IllegalArgumentException("ID пользователя должен быть положительным числом. Введите ID:");
+                throw new IllegalArgumentException("ID пользователя должен быть положительным числом.");
             }
             boolean idExists = users.stream().anyMatch(u -> u.getId() == id);
             if (idExists) {
